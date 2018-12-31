@@ -6,6 +6,8 @@ var app = require('http').createServer(handler)
 
 app.listen(8080);
 
+console.log("Running on port 8080");
+
 var Files ={};
 
 function handler (req, res) {
