@@ -78,11 +78,13 @@ io.sockets.on('connection', function (socket) {
               console.log("Combining Intro and Outro on " + Name);
 
               var cmd = 'ffmpeg';
-              var filename = Name.split(".")[0];
+              var filename = Name;
+              var nameOnly = filename.split(".")[0];
 
-              cmdFull = 'ffmpeg -i Source/Intro.mp4 -i Video/' + filename + ' -i Source/Outro.mp4 -f lavfi -i color=black -filter_complex "[1:v]scale=w=1920:h=1080:force_original_aspect_ratio=2[scaled]; [scaled]crop=1920:1080[cropped]; [cropped]fps=30[fpsset]; [0:v]fade=t=out:st=6:d=1:alpha=1, setpts=PTS-STARTPTS[introfade]; [introfade][0:a][fpsset][1:a][2:v][2:a]concat=n=3:v=1:a=1[outv][outa]" -map "[outv]" -map "[outa]" Video/' + filename + '_Final.mp4';
+              cmdFull = 'ffmpeg -i Source/Intro.mp4 -i Video/' + filename + ' -i Source/Outro.mp4 -f lavfi -i color=black -filter_complex "[1:v]scale=w=1920:h=1080:force_original_aspect_ratio=2[scaled]; [scaled]crop=1920:1080[cropped]; [cropped]fps=30[fpsset]; [0:v]fade=t=out:st=6:d=1:alpha=1, setpts=PTS-STARTPTS[introfade]; [introfade][0:a][fpsset][1:a][2:v][2:a]concat=n=3:v=1:a=1[outv][outa]" -map "[outv]" -map "[outa]" Video/' + nameOnly + '_Final.mp4';
 
               fs.writeFileSync("convert.bat", cmdFull);
+              fs.chmodSync("convert.bat", '755');
 
               var args = [
                 '-i', 'Source/Intro.mp4',
@@ -98,7 +100,7 @@ io.sockets.on('connection', function (socket) {
 
               console.log("FFMPEG Starting Convert and Combine");
 
-              var proc = exec("convert.bat")
+              var proc = exec("./convert.bat")
               proc.on('exit', ()=> {
                 socket.emit('Done', {'URL': 'video/' + Name.split(".")[0] + "_Final.mp4"});
                 console.log("All operations on " + Name + " finished!");
