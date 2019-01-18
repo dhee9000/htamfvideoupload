@@ -55,7 +55,7 @@ function FileChosen(evnt) {
     //document.getElementById('NameBox').value = SelectedFile.name;
 }
 
-var socket = io.connect('http://' + window.location.href.split("?")[0].split(":")[0] + ':69');
+var socket = io.connect('http://' + window.location.href.split(".com")[0] + '.com:69');
 var FReader;
 var Name;
 function StartUpload(){
@@ -104,7 +104,7 @@ socket.on('Convert', function(data){
 });
 
 socket.on('Done', function(data){
-    var Content = "<p>Done. If link doesn't work, please try again in a little while (processing delays). To save the video, right click the link and click Save Link As.. or Save Target As.. <br /> <a href='" + window.location.href.split("?")[0] + data["URL"] + "'>Link To Video</a></p>";
+    var Content = "<p>Done. If link doesn't work, please try again in a little while (processing delays). To save the video, right click the link and click Save Link As.. or Save Target As.. <br /> <a href='" + window.location.href.split(".com")[0] + ".com" + data["URL"] + "'>Link To Video</a></p>";
     document.getElementById('UploadArea').innerHTML = Content;
 
 });
