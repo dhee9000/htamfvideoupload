@@ -55,7 +55,11 @@ function FileChosen(evnt) {
     //document.getElementById('NameBox').value = SelectedFile.name;
 }
 
+<<<<<<< HEAD
 var socket = io.connect('http://' + window.location.href.split("?")[0].split(":")[0] + ':69');
+=======
+var socket = io.connect('http://' + window.location.href.split("?")[0] + ':69');
+>>>>>>> 9f68bdfd5236734df8b72e04287a0908375d9a7b
 var FReader;
 var Name;
 function StartUpload(){
